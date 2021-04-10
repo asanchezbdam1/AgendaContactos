@@ -1,4 +1,4 @@
-public class Contacto {
+public class Contacto implements Comparable <Contacto> {
 	private String nombre;
 	private String apellidos;
 	private String telefono;
@@ -48,6 +48,41 @@ public class Contacto {
 	public int hashCode() {
 		return email.hashCode();
 
+	}
+	
+	public char getPrimeraLetra() {
+		return apellidos.charAt(0);
+	}
+	
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		if (o == this) {
+			return true;
+		}
+		if (this.getClass() != o.getClass()) {
+			return false;
+		}
+		Contacto c = (Contacto) o;
+		if (this.apellidos.compareTo(c.getApellidos()) != 0) {
+			return false;
+		}
+		if (this.nombre.compareTo(c.getNombre()) != 0) {
+			return false;
+		}
+		if (this.email.compareTo(c.getEmail()) != 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	public int compareTo(Contacto c) {
+		int n = this.apellidos.compareTo(c.getApellidos());
+		if (n == 0) {
+			n = this.nombre.compareTo(c.getNombre());
+		}
+		return n;
 	}
 
 }
