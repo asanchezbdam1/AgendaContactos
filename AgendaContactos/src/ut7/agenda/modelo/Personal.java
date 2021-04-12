@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 public class Personal extends Contacto {
 	private LocalDate fechaNacimiento;
 	private Relacion relacion;
-
+	/**
+	 * Constructor de la clase Personal
+	 */
 	public Personal(String nombre, String apellido, String telefono, String email, String fechaNacimiento,
 			Relacion relacion) {
 		super(nombre, apellido, telefono, email);
@@ -18,14 +20,25 @@ public class Personal extends Contacto {
 		setFirmaEmail();
 	}
 
+	/**
+	 * Establece la firma como "Un abrazo!!"
+	 */
 	public void setFirmaEmail() {
 		super.setFirmaEmail("Un abrazo!!");
 	}
-
+	
+	/**
+	 * 
+	 * @return verdadero si el día actual es el cumpleaños del contacto
+	 */
 	public boolean esCumpleaños() {
 		return fechaNacimiento.isEqual(LocalDate.now());
 	}
-	
+
+	/**
+	 * 
+	 * @return representación textual del contacto personal
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + "\nFecha nacimiento: " + fechaNacimiento.format(DateTimeFormatter.ofPattern("dd LLL. yyyy")) + "\nRelación: " + relacion;

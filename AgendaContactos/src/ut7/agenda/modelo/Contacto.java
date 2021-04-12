@@ -10,7 +10,10 @@ public abstract class Contacto implements Comparable <Contacto> {
 	private String telefono;
 	private String email;
 	private String firmaEmail;
-
+	
+	/**
+	 * Constructor de la clase Contacto
+	 */
 	public Contacto(String nombre, String apellidos, String telefono,
 			String email) {
 		this.nombre = nombre.toUpperCase();
@@ -57,10 +60,17 @@ public abstract class Contacto implements Comparable <Contacto> {
 
 	}
 	
+	/**
+	 * 
+	 * @return Primera letra de los apellidos
+	 */
 	public char getPrimeraLetra() {
 		return apellidos.charAt(0);
 	}
 	
+	/**
+	 * Compara si dos Contactos son iguales, siendo del mismo tipo, apellidos y nombre
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -85,6 +95,9 @@ public abstract class Contacto implements Comparable <Contacto> {
 		return true;
 	}
 	
+	/**
+	 * Establece el criterio de ordenación natural
+	 */
 	@Override
 	public int compareTo(Contacto c) {
 		int n = this.apellidos.compareTo(c.getApellidos());
@@ -93,7 +106,7 @@ public abstract class Contacto implements Comparable <Contacto> {
 		}
 		return n;
 	}
-
+	
 	public String getFirmaEmail() {
 		return firmaEmail;
 	}
@@ -101,7 +114,11 @@ public abstract class Contacto implements Comparable <Contacto> {
 	public void setFirmaEmail(String firmaEmail) {
 		this.firmaEmail = firmaEmail;
 	}
-	
+
+	/**
+	 * 
+	 * @return representación textual del contacto
+	 */
 	public String toString() {
 		return "\n" + apellidos + ", " + nombre + " (" + this.getClass().getSimpleName().toUpperCase() + ")\nTfno: " +
 	 telefono + " | email: " + email;

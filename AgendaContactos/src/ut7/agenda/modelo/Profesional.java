@@ -7,6 +7,9 @@ package ut7.agenda.modelo;
 public class Profesional extends Contacto {
 	private String nombreEmpresa;
 
+	/**
+	 * Constructor de la clase Profesional
+	 */
 	public Profesional(String nombre, String apellido, String telefono, String email, String nombreEmpresa) {
 		super(nombre, apellido, telefono, email);
 		String[] empresa = nombreEmpresa.split(" ");
@@ -24,12 +27,19 @@ public class Profesional extends Contacto {
 	public void setNombreEmpresa(String nombreEmpresa) {
 		this.nombreEmpresa = nombreEmpresa;
 	}
-
+	
+	/**
+	 * Establece la firma del contacto a una al azar de las contenidas en el array
+	 */
 	public void setFirmaEmail() {
 		String[] firmas = { "Atentamente", "Saludos", "Saludos cordiales", "Mis mejores deseos" };
 		super.setFirmaEmail(firmas[(int) (Math.random() * 4)]);
 	}
-	
+
+	/**
+	 * 
+	 * @return representación textual del contacto profesional
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + "\nEmpresa: " + nombreEmpresa;
