@@ -1,6 +1,12 @@
+package ut7.agenda.test;
 import java.util.ArrayList;
 import java.util.List;
-
+import ut7.agenda.modelo.*;
+/**
+ * 
+ * @author Ander Gaona y Asier Sánchez
+ *
+ */
 public class TestProfesionalPersonal {
 
 	public static void main(String[] args) {

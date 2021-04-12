@@ -1,3 +1,9 @@
+package ut7.agenda.modelo;
+/**
+ * 
+ * @author Ander Gaona y Asier Sánchez
+ *
+ */
 public abstract class Contacto implements Comparable <Contacto> {
 	private String nombre;
 	private String apellidos;
@@ -94,6 +100,11 @@ public abstract class Contacto implements Comparable <Contacto> {
 
 	public void setFirmaEmail(String firmaEmail) {
 		this.firmaEmail = firmaEmail;
+	}
+	
+	public String toString() {
+		return "\n" + apellidos + ", " + nombre + " (" + this.getClass().getSimpleName().toUpperCase() + ")\nTfno: " +
+	 telefono + " | email: " + email;
 	}
 
 }

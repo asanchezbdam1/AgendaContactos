@@ -1,7 +1,12 @@
+package ut7.agenda.modelo;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * 
+ * @author Ander Gaona y Asier Sánchez
+ *
+ */
 public class AgendaContactos {
 	private Map<Character, Set<Contacto>> agenda;
 

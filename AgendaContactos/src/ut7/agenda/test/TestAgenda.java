@@ -1,6 +1,14 @@
+package ut7.agenda.test;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
-
+import ut7.agenda.modelo.*;
+import ut7.agenda.io.*;
+/**
+ * 
+ * @author Ander Gaona y Asier Sánchez
+ *
+ */
 public class TestAgenda {
 
 	public static void main(String[] args) {

@@ -1,5 +1,9 @@
-
+package ut7.agenda.io;
+import ut7.agenda.modelo.*;
 /**
+ * 
+ * @author Ander Gaona y Asier Sánchez
+ *
  * Utilidades para cargar la agenda
  */
 public class AgendaIO {
