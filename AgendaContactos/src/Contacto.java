@@ -1,8 +1,9 @@
-public class Contacto implements Comparable <Contacto> {
+public abstract class Contacto implements Comparable <Contacto> {
 	private String nombre;
 	private String apellidos;
 	private String telefono;
 	private String email;
+	private String firmaEmail;
 
 	public Contacto(String nombre, String apellidos, String telefono,
 			String email) {
@@ -54,6 +55,7 @@ public class Contacto implements Comparable <Contacto> {
 		return apellidos.charAt(0);
 	}
 	
+	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
 			return false;
@@ -77,12 +79,21 @@ public class Contacto implements Comparable <Contacto> {
 		return true;
 	}
 	
+	@Override
 	public int compareTo(Contacto c) {
 		int n = this.apellidos.compareTo(c.getApellidos());
 		if (n == 0) {
 			n = this.nombre.compareTo(c.getNombre());
 		}
 		return n;
+	}
+
+	public String getFirmaEmail() {
+		return firmaEmail;
+	}
+
+	public void setFirmaEmail(String firmaEmail) {
+		this.firmaEmail = firmaEmail;
 	}
 
 }
