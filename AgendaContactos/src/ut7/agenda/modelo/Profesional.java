@@ -17,7 +17,6 @@ public class Profesional extends Contacto {
 		for (String palabra : empresa) {
 			this.nombreEmpresa += Character.toUpperCase(palabra.charAt(0)) + palabra.substring(1) + " ";
 		}
-		setFirmaEmail();
 	}
 
 	public String getNombreEmpresa() {
@@ -31,9 +30,9 @@ public class Profesional extends Contacto {
 	/**
 	 * Establece la firma del contacto a una al azar de las contenidas en el array
 	 */
-	public void setFirmaEmail() {
+	public String getFirmaEmail() {
 		String[] firmas = { "Atentamente", "Saludos", "Saludos cordiales", "Mis mejores deseos" };
-		super.setFirmaEmail(firmas[(int) (Math.random() * 4)]);
+		return firmas[(int) (Math.random() * 4)];
 	}
 
 	/**

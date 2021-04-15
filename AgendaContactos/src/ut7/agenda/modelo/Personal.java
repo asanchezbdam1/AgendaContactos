@@ -17,14 +17,13 @@ public class Personal extends Contacto {
 		super(nombre, apellido, telefono, email);
 		this.fechaNacimiento = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		this.relacion = relacion;
-		setFirmaEmail();
 	}
 
 	/**
 	 * Establece la firma como "Un abrazo!!"
 	 */
-	public void setFirmaEmail() {
-		super.setFirmaEmail("Un abrazo!!");
+	public String getFirmaEmail() {
+		return "Un abrazo!!";
 	}
 	
 	/**
@@ -32,7 +31,7 @@ public class Personal extends Contacto {
 	 * @return verdadero si el día actual es el cumpleaños del contacto
 	 */
 	public boolean esCumpleaños() {
-		return fechaNacimiento.isEqual(LocalDate.now());
+		return fechaNacimiento.getMonth() == LocalDate.now().getMonth() && fechaNacimiento.getDayOfMonth() == LocalDate.now().getDayOfMonth();
 	}
 
 	/**

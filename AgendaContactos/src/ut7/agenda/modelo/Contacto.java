@@ -9,7 +9,6 @@ public abstract class Contacto implements Comparable <Contacto> {
 	private String apellidos;
 	private String telefono;
 	private String email;
-	private String firmaEmail;
 	
 	/**
 	 * Constructor de la clase Contacto
@@ -107,13 +106,7 @@ public abstract class Contacto implements Comparable <Contacto> {
 		return n;
 	}
 	
-	public String getFirmaEmail() {
-		return firmaEmail;
-	}
-
-	public void setFirmaEmail(String firmaEmail) {
-		this.firmaEmail = firmaEmail;
-	}
+	public abstract String getFirmaEmail();
 
 	/**
 	 * 
