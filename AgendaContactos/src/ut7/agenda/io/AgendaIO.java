@@ -13,7 +13,20 @@ public class AgendaIO {
 	}
 
 	private static Contacto parsearLinea(String linea) {
-		return null;
+		String[] datos = linea.split(",");
+		for (String d : datos) {
+			d = d.trim();
+		}
+		String nom = datos[0].split("\s+")[0];
+		String apellido = datos[0].split("\s+")[1];
+		Contacto c = null;
+		if (datos[0].equals("1")) {
+			c = new Profesional(nom, apellido, datos[2], datos[3], datos[4]);
+		}
+		else if (datos[0].equals("2")) {
+			c = new Personal(nom, apellido, datos[2], datos[3], datos[4], Relacion.valueOf(datos[5].toUpperCase()));
+		}
+		return c;
 
 	}
 
