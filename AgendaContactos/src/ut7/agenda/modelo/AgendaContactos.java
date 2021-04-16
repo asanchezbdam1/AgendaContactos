@@ -35,7 +35,7 @@ public class AgendaContactos {
 
 	public Set<Contacto> contactosEnLetra(Character letra) {
 		if (!agenda.containsKey(letra)) {
-			throw new IllegalArgumentException("No existe esa letra en la agenda");
+			return null;
 		} else {
 			return agenda.get(letra);
 		}
@@ -130,7 +130,6 @@ public class AgendaContactos {
 
 		if (!agenda.containsKey(letra)) {
 			return null;
-//			throw new IllegalArgumentException("No existe esa letra en la agenda");
 		}
 		List<Personal> personales = personalesEnLetra(letra);
 		Collections.sort(personales,
