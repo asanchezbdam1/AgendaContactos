@@ -116,13 +116,10 @@ public class AgendaContactos {
 		for (char c : claves) {
 			List<Personal> contactos = personalesEnLetra(c);
 			for (Personal con : contactos) {
-				List<String> arlc = personales.get(con.getRelacion());
-				if (arlc == null) {
+				if (personales.get(con.getRelacion()) == null) {
 					personales.put(con.getRelacion(), new ArrayList<String>());
-					personales.get(con.getRelacion()).add(con.getNombre());
-				} else {
-					arlc.add(con.getNombre());
 				}
+				personales.get(con.getRelacion()).add(con.getApellidos() + " " + con.getNombre());
 			}
 		}
 		for (Relacion r : personales.keySet()) {
