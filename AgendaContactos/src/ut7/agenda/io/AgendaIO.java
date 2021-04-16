@@ -14,6 +14,12 @@ import ut7.agenda.modelo.Relacion;
  */
 public class AgendaIO {
 
+	/**
+	 * Importa a una agenda dada un String[] que contiene las lineas con las
+	 * personas que se quiere agregar a ella
+	 * 
+	 * @param La agenda a la que se quiere añadir los contactos
+	 */
 	public static void importar(AgendaContactos agenda) {
 		String[] contactos = obtenerLineasDatos();
 		for (String contacto : contactos) {
@@ -21,6 +27,12 @@ public class AgendaIO {
 		}
 	}
 
+	/**
+	 * Parsea una linea y la convierte en un objeto Contacto
+	 * 
+	 * @param La linea a parsear
+	 * @return Un objeto Contacto
+	 */
 	private static Contacto parsearLinea(String linea) {
 		String[] datos = linea.split(",");
 		for (int i = 0; i < datos.length; i++) {
@@ -31,9 +43,9 @@ public class AgendaIO {
 		Contacto c = null;
 		if (datos[0].equals("1")) {
 			c = new Profesional(datos[1], datos[2], datos[3], datos[4], datos[5]);
-		}
-		else if (datos[0].equals("2")) {
-			c = new Personal(datos[1], datos[2], datos[3], datos[4], datos[5], Relacion.valueOf(datos[6].toUpperCase()));
+		} else if (datos[0].equals("2")) {
+			c = new Personal(datos[1], datos[2], datos[3], datos[4], datos[5],
+					Relacion.valueOf(datos[6].toUpperCase()));
 		}
 		return c;
 
