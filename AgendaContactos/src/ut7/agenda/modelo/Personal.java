@@ -45,10 +45,6 @@ public class Personal extends Contacto {
 		return "Un abrazo!!";
 	}
 
-	public LocalDate getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
 	/**
 	 * 
 	 * @return verdadero si el día actual es el cumpleaños del contacto
