@@ -34,6 +34,7 @@ public class AgendaContactos {
 	}
 
 	public Set<Contacto> contactosEnLetra(Character letra) {
+		letra = Character.toUpperCase(letra);
 		if (!agenda.containsKey(letra)) {
 			return null;
 		} else {
@@ -59,6 +60,7 @@ public class AgendaContactos {
 	}
 
 	public List<Contacto> buscarContactos(String texto) {
+		texto = texto.toUpperCase();
 		List<Contacto> contactos = new ArrayList<>();
 		Set<Map.Entry<Character, Set<Contacto>>> entradas = agenda.entrySet();
 		Iterator<Map.Entry<Character, Set<Contacto>>> it = entradas.iterator();
@@ -75,7 +77,8 @@ public class AgendaContactos {
 	}
 
 	public List<Personal> personalesEnLetra(char letra) {
-		List<Personal> personales = new ArrayList();
+		letra = Character.toUpperCase(letra);
+		List<Personal> personales = new ArrayList<>();
 		Set<Contacto> contactos = agenda.get(letra);
 		if (contactos == null) {
 			return null;
