@@ -1,6 +1,8 @@
 package ut7.agenda.modelo;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 /**
  * 
  * @author Ander Gaona y Asier Sánchez
@@ -9,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class Personal extends Contacto {
 	private LocalDate fechaNacimiento;
 	private Relacion relacion;
+
 	/**
 	 * Constructor de la clase Personal
 	 */
@@ -25,13 +28,18 @@ public class Personal extends Contacto {
 	public String getFirmaEmail() {
 		return "Un abrazo!!";
 	}
-	
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
 	/**
 	 * 
 	 * @return verdadero si el día actual es el cumpleaños del contacto
 	 */
 	public boolean esCumpleaños() {
-		return fechaNacimiento.getMonth() == LocalDate.now().getMonth() && fechaNacimiento.getDayOfMonth() == LocalDate.now().getDayOfMonth();
+		return fechaNacimiento.getMonth() == LocalDate.now().getMonth()
+				&& fechaNacimiento.getDayOfMonth() == LocalDate.now().getDayOfMonth();
 	}
 
 	/**
@@ -40,7 +48,8 @@ public class Personal extends Contacto {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\nFecha nacimiento: " + fechaNacimiento.format(DateTimeFormatter.ofPattern("dd LLL. yyyy")) + "\nRelación: " + relacion;
+		return super.toString() + "\nFecha nacimiento: "
+				+ fechaNacimiento.format(DateTimeFormatter.ofPattern("dd LLL. yyyy")) + "\nRelación: " + relacion;
 	}
 
 }
