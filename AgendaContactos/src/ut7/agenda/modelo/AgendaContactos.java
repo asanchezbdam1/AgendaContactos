@@ -52,10 +52,14 @@ public class AgendaContactos {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("AGENDA DE CONTACTOS\n");
 		for (Character c : agenda.keySet()) {
-			agenda.get(c).forEach(cont -> sb.append(cont.toString()));
+			Set<Contacto> contactos = agenda.get(c);
+			sb.append(c + " (" + contactos.size() + " contactos/s)\n\n");
+			contactos.forEach(cont -> sb.append(cont.toString() + "\n"));
+			sb.append("\n-------------------------\n");
 		}
+		sb.append("(" + this.totalContactos() + " contactos/s)");
 		return sb.toString();
 	}
 

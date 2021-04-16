@@ -113,8 +113,8 @@ public abstract class Contacto implements Comparable <Contacto> {
 	 * @return representación textual del contacto
 	 */
 	public String toString() {
-		return "\n" + apellidos + ", " + nombre + " (" + this.getClass().getSimpleName().toUpperCase() + ")\nTfno: " +
-	 telefono + " | email: " + email;
+		return apellidos + ", " + nombre + " (" + this.getClass().getSimpleName().toUpperCase() + ")\nTfno: " +
+	 telefono + " | email: " + email + "\n";
 	}
 
 }
