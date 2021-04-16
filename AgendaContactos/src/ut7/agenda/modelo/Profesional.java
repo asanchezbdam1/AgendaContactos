@@ -15,7 +15,7 @@ public class Profesional extends Contacto {
 		String[] empresa = nombreEmpresa.split(" ");
 		this.nombreEmpresa = "";
 		for (String palabra : empresa) {
-			this.nombreEmpresa += Character.toUpperCase(palabra.charAt(0)) + palabra.substring(1) + " ";
+			this.nombreEmpresa += Character.toUpperCase(palabra.charAt(0)) + palabra.substring(1).toLowerCase() + " ";
 		}
 	}
 
