@@ -84,11 +84,11 @@ public class AgendaContactos {
 		if (contactos == null) {
 			return null;
 		}
-			for (Contacto cont : contactos) {
-				if (cont instanceof Personal) {
-					personales.add((Personal) cont);
-				}
+		for (Contacto cont : contactos) {
+			if (cont instanceof Personal) {
+				personales.add((Personal) cont);
 			}
+		}
 		return personales;
 	}
 
@@ -99,8 +99,7 @@ public class AgendaContactos {
 		while (it.hasNext()) {
 			Set<Contacto> entrada = it.next().getValue();
 			for (Contacto contacto : entrada) {
-				if (contacto instanceof Personal && ((Personal) contacto).esCumpleaños())
-				{
+				if (contacto instanceof Personal && ((Personal) contacto).esCumpleaños()) {
 					contactos.add((Personal) contacto);
 				}
 			}
@@ -118,8 +117,7 @@ public class AgendaContactos {
 				if (arlc == null) {
 					personales.put(con.getRelacion(), new ArrayList<String>());
 					personales.get(con.getRelacion()).add(con.getNombre());
-				}
-				else {
+				} else {
 					arlc.add(con.getNombre());
 				}
 			}
@@ -131,7 +129,7 @@ public class AgendaContactos {
 	}
 
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {
-
+		letra = Character.toUpperCase(letra);
 		if (!agenda.containsKey(letra)) {
 			return null;
 		}
