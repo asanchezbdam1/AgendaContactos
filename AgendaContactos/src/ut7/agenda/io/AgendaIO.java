@@ -23,8 +23,8 @@ public class AgendaIO {
 
 	private static Contacto parsearLinea(String linea) {
 		String[] datos = linea.split(",");
-		for (String d : datos) {
-			d = d.trim();
+		for (int i = 0; i < datos.length; i++) {
+			datos[i] = datos[i].trim();
 		}
 		datos[1] = datos[1].toUpperCase();
 		datos[2] = datos[2].toUpperCase();

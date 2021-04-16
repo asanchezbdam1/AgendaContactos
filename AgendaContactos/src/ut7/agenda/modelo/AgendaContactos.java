@@ -76,11 +76,15 @@ public class AgendaContactos {
 
 	public List<Personal> personalesEnLetra(char letra) {
 		List<Personal> personales = new ArrayList();
-		for (Contacto cont : agenda.get(letra)) {
-			if (cont instanceof Personal) {
-				personales.add((Personal) cont);
-			}
+		Set<Contacto> contactos = agenda.get(letra);
+		if (contactos == null) {
+			return null;
 		}
+			for (Contacto cont : contactos) {
+				if (cont instanceof Personal) {
+					personales.add((Personal) cont);
+				}
+			}
 		return personales;
 	}
 
@@ -92,7 +96,6 @@ public class AgendaContactos {
 			Set<Contacto> entrada = it.next().getValue();
 			for (Contacto contacto : entrada) {
 				if (contacto instanceof Personal && ((Personal) contacto).esCumpleaños())
-					;
 				{
 					contactos.add((Personal) contacto);
 				}
@@ -126,7 +129,8 @@ public class AgendaContactos {
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {
 
 		if (!agenda.containsKey(letra)) {
-			throw new IllegalArgumentException("No existe esa letra en la agenda");
+			return null;
+//			throw new IllegalArgumentException("No existe esa letra en la agenda");
 		}
 		List<Personal> personales = personalesEnLetra(letra);
 		Collections.sort(personales,

@@ -12,7 +12,7 @@ public class Profesional extends Contacto {
 	 */
 	public Profesional(String nombre, String apellido, String telefono, String email, String nombreEmpresa) {
 		super(nombre, apellido, telefono, email);
-		String[] empresa = nombreEmpresa.split(" ");
+		String[] empresa = nombreEmpresa.split("\\s+");
 		this.nombreEmpresa = "";
 		for (String palabra : empresa) {
 			this.nombreEmpresa += Character.toUpperCase(palabra.charAt(0)) + palabra.substring(1).toLowerCase() + " ";
