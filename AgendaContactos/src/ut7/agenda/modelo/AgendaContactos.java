@@ -85,8 +85,20 @@ public class AgendaContactos {
 	}
 
 	public List<Personal> felicitar() {
-
-		return null;
+		List<Personal> contactos = new ArrayList<>();
+		Set<Map.Entry<Character, Set<Contacto>>> entradas = agenda.entrySet();
+		Iterator<Map.Entry<Character, Set<Contacto>>> it = entradas.iterator();
+		while (it.hasNext()) {
+			Set<Contacto> entrada = it.next().getValue();
+			for (Contacto contacto : entrada) {
+				if (contacto instanceof Personal && ((Personal) contacto).esCumpleaños())
+					;
+				{
+					contactos.add((Personal) contacto);
+				}
+			}
+		}
+		return contactos;
 	}
 
 	public Map<Relacion, List<String>> personalesPorRelacion() {
@@ -113,7 +125,13 @@ public class AgendaContactos {
 
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {
 
-		return null;
+		if (!agenda.containsKey(letra)) {
+			throw new IllegalArgumentException("No existe esa letra en la agenda");
+		}
+		List<Personal> personales = personalesEnLetra(letra);
+		Collections.sort(personales,
+				(p1, p2) -> (int) Math.signum(p1.getFechaNacimiento().compareTo(p2.getFechaNacimiento())));
+		return personales;
 
 	}
 
