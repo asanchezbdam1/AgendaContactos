@@ -2,6 +2,7 @@ package ut7.agenda.modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,8 +33,12 @@ public class AgendaContactos {
 		}
 	}
 
-	public void contactosEnLetra() {
-
+	public Set<Contacto> contactosEnLetra(Character letra) {
+		if (!agenda.containsKey(letra)) {
+			throw new IllegalArgumentException("No existe esa letra en la agenda");
+		} else {
+			return agenda.get(letra);
+		}
 	}
 
 	public int totalContactos() {
@@ -54,8 +59,18 @@ public class AgendaContactos {
 	}
 
 	public List<Contacto> buscarContactos(String texto) {
-
-		return null;
+		List<Contacto> contactos = new ArrayList<>();
+		Set<Map.Entry<Character, Set<Contacto>>> entradas = agenda.entrySet();
+		Iterator<Map.Entry<Character, Set<Contacto>>> it = entradas.iterator();
+		while (it.hasNext()) {
+			Set<Contacto> entrada = it.next().getValue();
+			for (Contacto contacto : entrada) {
+				if (contacto.getNombre().lastIndexOf(texto) != -1 || contacto.getApellidos().lastIndexOf(texto) != -1) {
+					contactos.add(contacto);
+				}
+			}
+		}
+		return contactos;
 
 	}
 
