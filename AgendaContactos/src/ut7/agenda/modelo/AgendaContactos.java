@@ -89,19 +89,19 @@ public class AgendaContactos {
 		return null;
 	}
 
-	public Map<Relacion, ArrayList<Personal>> personalesPorRelacion() {
-		Map<Relacion, ArrayList<Personal>> personales = new TreeMap<>();
+	public Map<Relacion, List<String>> personalesPorRelacion() {
+		Map<Relacion, List<String>> personales = new TreeMap<>();
 		Set<Character> claves = agenda.keySet();
 		for (char c : claves) {
 			List<Personal> contactos = personalesEnLetra(c);
 			for (Personal con : contactos) {
-				List<Personal> arlc = personales.get(con.getRelacion());
+				List<String> arlc = personales.get(con.getRelacion());
 				if (arlc == null) {
-					personales.put(con.getRelacion(), new ArrayList<Personal>());
-					personales.get(con.getRelacion()).add(con);
+					personales.put(con.getRelacion(), new ArrayList<String>());
+					personales.get(con.getRelacion()).add(con.getNombre());
 				}
 				else {
-					arlc.add(con);
+					arlc.add(con.getNombre());
 				}
 			}
 		}
