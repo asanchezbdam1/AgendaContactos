@@ -26,13 +26,14 @@ public class AgendaIO {
 		for (String d : datos) {
 			d = d.trim();
 		}
-		String nom = datos[0].split("\s+")[0];
-		String apellido = datos[0].split("\s+")[1];
+		datos[1] = datos[1].toUpperCase();
+		datos[2] = datos[2].toUpperCase();
 		Contacto c = null;
 		if (datos[0].equals("1")) {
-			c = new Profesional(nom, apellido, datos[2], datos[3], datos[4]);
-		} else if (datos[0].equals("2")) {
-			c = new Personal(nom, apellido, datos[2], datos[3], datos[4], Relacion.valueOf(datos[5].toUpperCase()));
+			c = new Profesional(datos[1], datos[2], datos[3], datos[4], datos[5]);
+		}
+		else if (datos[0].equals("2")) {
+			c = new Personal(datos[1], datos[2], datos[3], datos[4], datos[5], Relacion.valueOf(datos[6].toUpperCase()));
 		}
 		return c;
 

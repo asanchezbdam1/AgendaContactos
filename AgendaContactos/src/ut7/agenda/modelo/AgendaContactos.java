@@ -101,8 +101,26 @@ public class AgendaContactos {
 		return contactos;
 	}
 
-	public void personalesPorRelacion() {
-
+	public Map<Relacion, ArrayList<Personal>> personalesPorRelacion() {
+		Map<Relacion, ArrayList<Personal>> personales = new TreeMap<>();
+		Set<Character> claves = agenda.keySet();
+		for (char c : claves) {
+			List<Personal> contactos = personalesEnLetra(c);
+			for (Personal con : contactos) {
+				List<Personal> arlc = personales.get(con.getRelacion());
+				if (arlc == null) {
+					personales.put(con.getRelacion(), new ArrayList<Personal>());
+					personales.get(con.getRelacion()).add(con);
+				}
+				else {
+					arlc.add(con);
+				}
+			}
+		}
+		for (Relacion r : personales.keySet()) {
+			Collections.sort(personales.get(r));
+		}
+		return personales;
 	}
 
 	public List<Personal> personalesOrdenadosPorFechaNacimiento(char letra) {

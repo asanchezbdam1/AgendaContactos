@@ -21,6 +21,22 @@ public class Personal extends Contacto {
 		this.fechaNacimiento = LocalDate.parse(fechaNacimiento, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		this.relacion = relacion;
 	}
+	
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Relacion getRelacion() {
+		return relacion;
+	}
+
+	public void setRelacion(Relacion relacion) {
+		this.relacion = relacion;
+	}
 
 	/**
 	 * Establece la firma como "Un abrazo!!"
