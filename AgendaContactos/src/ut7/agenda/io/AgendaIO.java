@@ -1,15 +1,24 @@
 package ut7.agenda.io;
-import ut7.agenda.modelo.*;
+
+import ut7.agenda.modelo.AgendaContactos;
+import ut7.agenda.modelo.Contacto;
+import ut7.agenda.modelo.Personal;
+import ut7.agenda.modelo.Profesional;
+import ut7.agenda.modelo.Relacion;
+
 /**
  * 
  * @author Ander Gaona y Asier Sánchez
  *
- * Utilidades para cargar la agenda
+ *         Utilidades para cargar la agenda
  */
 public class AgendaIO {
 
 	public static void importar(AgendaContactos agenda) {
-
+		String[] contactos = obtenerLineasDatos();
+		for (String contacto : contactos) {
+			agenda.añadirContacto(parsearLinea(contacto));
+		}
 	}
 
 	private static Contacto parsearLinea(String linea) {
@@ -22,8 +31,7 @@ public class AgendaIO {
 		Contacto c = null;
 		if (datos[0].equals("1")) {
 			c = new Profesional(nom, apellido, datos[2], datos[3], datos[4]);
-		}
-		else if (datos[0].equals("2")) {
+		} else if (datos[0].equals("2")) {
 			c = new Personal(nom, apellido, datos[2], datos[3], datos[4], Relacion.valueOf(datos[5].toUpperCase()));
 		}
 		return c;
@@ -32,13 +40,12 @@ public class AgendaIO {
 
 	/**
 	 * 
-	 * @return un array de String con todas las líneas de información de todos
-	 *         los contactos. 1 significa contacto profesional, 2 significa
-	 *         contacto personal
+	 * @return un array de String con todas las líneas de información de todos los
+	 *         contactos. 1 significa contacto profesional, 2 significa contacto
+	 *         personal
 	 */
 	private static String[] obtenerLineasDatos() {
-		return new String[] {
-				"1, Isabel, Acosta Mendioroz,  678895433 ,  iacostamen@gmail.com ,  walden estrella ",
+		return new String[] { "1, Isabel, Acosta Mendioroz,  678895433 ,  iacostamen@gmail.com ,  walden estrella ",
 				"2,  pedro , urruti tello , 616789654 ,  urrutitello@gmail.com , 09/03/2007, amigos",
 				"1, Angel , Esteban Grande , 674544123 ,  aestebang@gmail.com ,  magma publicidad ",
 				"2, elena , bueno ganuza , 6786547699 ,  ebuenogan@gmail.com , 17/03/2000, amigos",
