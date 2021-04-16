@@ -60,8 +60,8 @@ public class Personal extends Contacto {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\nFecha nacimiento: "
-				+ fechaNacimiento.format(DateTimeFormatter.ofPattern("dd LLL. yyyy")) + "\nRelación: " + relacion;
+		return super.toString() + "Fecha nacimiento: "
+				+ fechaNacimiento.format(DateTimeFormatter.ofPattern("dd LLL. yyyy")) + "\nRelación: " + relacion + "\n";
 	}
 
 }
