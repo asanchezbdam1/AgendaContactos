@@ -155,9 +155,6 @@ public class AgendaContactos {
 				personales.get(con.getRelacion()).add(con.getApellidos() + " " + con.getNombre());
 			}
 		}
-		for (Relacion r : personales.keySet()) {
-			Collections.sort(personales.get(r));
-		}
 		return personales;
 	}
 
@@ -173,7 +170,7 @@ public class AgendaContactos {
 		}
 		List<Personal> personales = personalesEnLetra(letra);
 		Collections.sort(personales,
-				(p1, p2) -> (int) Math.signum(p1.getFechaNacimiento().compareTo(p2.getFechaNacimiento())));
+				(p1, p2) -> (int) p1.getFechaNacimiento().compareTo(p2.getFechaNacimiento()));
 		return personales;
 
 	}
