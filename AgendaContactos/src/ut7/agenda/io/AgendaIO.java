@@ -42,7 +42,6 @@ public class AgendaIO {
 			while (linea != null) {
 				try {
 					agenda.añadirContacto(parsearLinea(linea));
-					linea = entrada.readLine();
 				} catch (DateTimeParseException e) {
 					System.out.println("Error al parsear fecha " + e.getMessage());
 					errores++;
@@ -52,15 +51,13 @@ public class AgendaIO {
 				} catch (EnumConstantNotPresentException e) {
 					System.out.println("Error al encontrar la relacion " + e.getMessage());
 					errores++;
-				} catch (IOException e) {
-					System.out.println("Error al cargar la linea " + e.getMessage());
-					errores++;
 				}
+				linea = entrada.readLine();
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado " + e.getMessage());
-		} catch (IOException e1) {
-			System.out.println("Error en lectura " + e1.getMessage());
+		} catch (IOException e) {
+			System.out.println("Error en lectura " + e.getMessage());
 		} finally {
 			try {
 				entrada.close();
