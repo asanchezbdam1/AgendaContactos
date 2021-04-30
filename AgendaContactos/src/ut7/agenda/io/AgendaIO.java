@@ -51,6 +51,9 @@ public class AgendaIO {
 				} catch (EnumConstantNotPresentException e) {
 					System.out.println("Error al encontrar la relacion " + e.getMessage());
 					errores++;
+				} catch (IllegalArgumentException e) {
+					System.out.println("Dato errorneo " + e.getMessage());
+					errores++;
 				}
 				linea = entrada.readLine();
 			}
