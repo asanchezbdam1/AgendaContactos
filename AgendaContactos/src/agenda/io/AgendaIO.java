@@ -65,10 +65,8 @@ public class AgendaIO {
 		} finally {
 			try {
 				entrada.close();
-			} catch (NullPointerException e) {
+			} catch (NullPointerException | IOException e) {
 				System.out.println("Error al crear el lector " + e.getMessage());
-			} catch (IOException e) {
-				System.out.println("Error al cerrar el lector " + e.getMessage());
 			}
 		}
 
