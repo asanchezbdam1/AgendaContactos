@@ -1,6 +1,13 @@
 package ut7.agenda.io;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Map;
 
 import ut7.agenda.modelo.AgendaContactos;
 import ut7.agenda.modelo.Contacto;
@@ -52,8 +59,14 @@ public class AgendaIO {
 		return c;
 	}
 	
-	private static void exportarPersonales(AgendaContactos agenda, String fichero) {
-		
+	public static void exportarPersonales(AgendaContactos agenda, String fichero) throws IOException {
+		PrintWriter salida = new PrintWriter(new BufferedWriter(new FileWriter(new File(fichero))));
+		Map<Relacion, List<String>> personales = agenda.personalesPorRelacion();
+		for (Map.Entry<Relacion, List<String>> entrada : personales.entrySet()) {
+			salida.println(entrada.getKey());
+			salida.println("\t" + entrada.getValue().toString());
+		}
+		salida.close();
 	}
 
 }
