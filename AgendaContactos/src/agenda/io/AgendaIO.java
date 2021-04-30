@@ -27,10 +27,11 @@ import agenda.modelo.Relacion;
 public class AgendaIO {
 
 	/**
-	 * Importa a una agenda dada un String[] que contiene las lineas con las
-	 * personas que se quiere agregar a ella
+	 * Importa a una agenda dado el nombre de un fichero
 	 * 
 	 * @param La agenda a la que se quiere añadir los contactos
+	 * @param Nombre del fichero del que se extraen los datos
+	 * @return Número de líneas erroneas en la importación
 	 */
 	public static int importar(AgendaContactos agenda, String nombre) {
 		File f = new File(nombre);
@@ -98,6 +99,14 @@ public class AgendaIO {
 		return c;
 	}
 
+	/**
+	 * Recibe una agenda y nombre de un fichero y
+	 * exporta los contactos personales ordenados
+	 * por relación
+	 * @param Agenda con los contactos a exportar
+	 * @param Fichero al que se exportan los contactos
+	 * @throws IOException
+	 */
 	public static void exportarPersonales(AgendaContactos agenda, String fichero) throws IOException {
 		PrintWriter salida = new PrintWriter(new BufferedWriter(new FileWriter(new File(fichero))));
 		Map<Relacion, List<String>> personales = agenda.personalesPorRelacion();
