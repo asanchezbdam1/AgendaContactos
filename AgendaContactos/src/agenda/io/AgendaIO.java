@@ -1,4 +1,4 @@
-package ut7.agenda.io;
+package agenda.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,11 +12,11 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 
-import ut7.agenda.modelo.AgendaContactos;
-import ut7.agenda.modelo.Contacto;
-import ut7.agenda.modelo.Personal;
-import ut7.agenda.modelo.Profesional;
-import ut7.agenda.modelo.Relacion;
+import agenda.modelo.AgendaContactos;
+import agenda.modelo.Contacto;
+import agenda.modelo.Personal;
+import agenda.modelo.Profesional;
+import agenda.modelo.Relacion;
 
 /**
  * 

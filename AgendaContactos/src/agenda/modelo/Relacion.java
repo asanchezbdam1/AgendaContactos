@@ -1,4 +1,4 @@
-package ut7.agenda.modelo;
+package agenda.modelo;
 /**
  * Enumerado que recoge los tipos de relación personal
  * @author Ander Gaona y Asier Sánchez
