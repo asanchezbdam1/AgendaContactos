@@ -1,18 +1,27 @@
 package agenda.interfaz;
 
+import java.io.IOException;
+
+import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -50,7 +59,7 @@ public class GuiAgenda extends Application {
 		Scene scene = new Scene(root, 1100, 700);
 		stage.setScene(scene);
 		stage.setTitle("Agenda de contactos");
-		scene.getStylesheets().add(getClass().getResource("/application.css")
+		scene.getStylesheets().add(getClass().getResource("/darktheme.css")
 		                    .toExternalForm());
 		stage.show();
 
@@ -60,6 +69,7 @@ public class GuiAgenda extends Application {
 		BorderPane panel = new BorderPane();
 		panel.setTop(crearBarraMenu());
 		panel.setCenter(crearPanelPrincipal());
+		panel.getStyleClass().add("fondo");
 		return panel;
 	}
 
@@ -77,16 +87,27 @@ public class GuiAgenda extends Application {
 	}
 
 	private VBox crearPanelBotones() {
-		// a completar
 		VBox panel = new VBox();
-		
 		return panel;
 	}
 
 	private GridPane crearPanelLetras() {
-		// a completar
 		GridPane panel = new GridPane();
-
+		char[] letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 9; j++) {
+				char c = letras[i * 9 + j];
+				Button btn = new Button(String.valueOf(c));
+				btn.setOnAction(event -> contactosEnLetra(c));
+				btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+				btn.getStyleClass().add("botonLetra");
+				GridPane.setHgrow(btn, Priority.ALWAYS);
+				panel.add(btn, j, i);
+			}
+		}
+		panel.setPadding(new Insets(10));
+		panel.setHgap(5);
+		panel.setVgap(5);
 		return panel;
 	}
 
@@ -103,8 +124,16 @@ public class GuiAgenda extends Application {
 	}
 
 	private void exportarPersonales() {
-		// a completar
-
+		TextInputDialog ventana = new TextInputDialog("Introduzca nombre");
+		ventana.setContentText("Nombre para el fichero");
+		ventana.showAndWait();
+		try {
+			AgendaIO.exportarPersonales(agenda, ventana.getResult());
+			areaTexto.setText("Exportados datos personajes");
+		}
+		catch (IOException e) {
+			areaTexto.setText("Error al exportar");
+		}
 	}
 
 	/**
@@ -112,8 +141,12 @@ public class GuiAgenda extends Application {
 	 */
 	private void listar() {
 		clear();
-		// a completar
-
+		if (rbtListarTodo.isSelected()) {
+			areaTexto.setText(agenda.toString());
+		}
+		else {
+			areaTexto.setText(String.valueOf(agenda.totalContactos()));
+		}
 	}
 
 	private void personalesOrdenadosPorFecha() {
@@ -124,8 +157,13 @@ public class GuiAgenda extends Application {
 
 	private void contactosPersonalesEnLetra() {
 		clear();
-		// a completar
-
+		ChoiceDialog<Character> ventana = new ChoiceDialog<>();
+		ventana.setContentText("Seleccionar letra");
+		ventana.showAndWait();
+		char c = ventana.getResult();
+		StringBuilder sb = new StringBuilder(java.time.LocalDate.now() + "\n");
+		agenda.personalesEnLetra(c).forEach(personal -> sb.append(personal.toString()));
+		areaTexto.setText(sb.toString());
 	}
 
 	private void contactosEnLetra(char letra) {
@@ -135,21 +173,27 @@ public class GuiAgenda extends Application {
 
 	private void felicitar() {
 		clear();
-		// a completar
+		StringBuilder sb = new StringBuilder(java.time.LocalDate.now() + "\n");
+		agenda.felicitar().forEach(personal -> sb.append(personal.toString()));
+		areaTexto.setText(sb.toString());
 
 	}
 
 	private void buscar() {
 		clear();
 		// a completar
-
 		cogerFoco();
 
 	}
 
 	private void about() {
-		// a completar
-
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("About Agenda de Contactos");
+		alert.setContentText("Mi agenda de contactos");
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().
+		getResource("/application.css").toExternalForm());
+		alert.showAndWait();
 	}
 
 	private void clear() {
