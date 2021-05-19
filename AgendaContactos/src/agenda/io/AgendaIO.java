@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -38,7 +40,9 @@ public class AgendaIO {
 		int errores = 0;
 		BufferedReader entrada = null;
 		try {
-			entrada = new BufferedReader(new FileReader(f));
+			InputStream input = AgendaIO.class.getClassLoader()
+					 .getResourceAsStream(nombre);
+			entrada = new BufferedReader(new InputStreamReader(input));
 			String linea = entrada.readLine();
 			while (linea != null) {
 				try {
