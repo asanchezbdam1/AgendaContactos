@@ -21,6 +21,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -62,7 +63,7 @@ public class GuiAgenda extends Application {
 		Scene scene = new Scene(root, 1100, 700);
 		stage.setScene(scene);
 		stage.setTitle("Agenda de contactos");
-		scene.getStylesheets().add(getClass().getResource("/darktheme.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		stage.show();
 
 	}
@@ -90,6 +91,47 @@ public class GuiAgenda extends Application {
 
 	private VBox crearPanelBotones() {
 		VBox panel = new VBox();
+
+		panel.setPadding(new Insets(10));
+
+		txtBuscar = new TextField("Buscar");
+		txtBuscar.setMinHeight(40);
+		txtBuscar.setPadding(new Insets(0, 0, 40, 0));
+
+		rbtListarTodo = new RadioButton("Listar toda la agenda");
+		rbtListarTodo.setSelected(true);
+
+		rbtListarSoloNumero = new RadioButton("Listar nº de contactos");
+
+		ToggleGroup grupo = new ToggleGroup();
+		rbtListarSoloNumero.setToggleGroup(grupo);
+		rbtListarTodo.setToggleGroup(grupo);
+
+		btnListar = new Button("Listar");
+		btnListar.getStyleClass().add("botones");
+		btnListar.setPrefWidth(250);
+		VBox.setMargin(btnListar, new Insets(0, 0, 40, 0));
+
+		btnPersonalesEnLetra = new Button("Contactos personales en letra");
+		btnPersonalesEnLetra.getStyleClass().add("botones");
+		btnPersonalesEnLetra.setPrefWidth(250);
+
+		btnPersonalesOrdenadosPorFecha = new Button("Contactos personales ordenados por fecha");
+		btnPersonalesOrdenadosPorFecha.getStyleClass().add("botones");
+		btnPersonalesOrdenadosPorFecha.setPrefWidth(250);
+
+		btnClear = new Button("Clear");
+		btnClear.getStyleClass().add("botones");
+		btnClear.setPrefWidth(250);
+		VBox.setMargin(btnClear, new Insets(40, 0, 0, 0));
+
+		btnSalir = new Button("Salir");
+		btnSalir.getStyleClass().add("botones");
+		btnSalir.setPrefWidth(250);
+
+		panel.getChildren().addAll(txtBuscar, rbtListarTodo, rbtListarSoloNumero, btnListar, btnPersonalesEnLetra,
+				btnPersonalesOrdenadosPorFecha, btnClear, btnSalir);
+
 		return panel;
 	}
 
@@ -143,6 +185,8 @@ public class GuiAgenda extends Application {
 		menu1.getItems().addAll(itemImportar, itemExportarPersonales, new SeparatorMenuItem(), itemSalir);
 		menu2.getItems().addAll(itemBuscar, itemFelicitar);
 		menu3.getItems().addAll(itemAbout);
+
+		barra.getMenus().addAll(menu1, menu2, menu3);
 
 		return barra;
 	}
