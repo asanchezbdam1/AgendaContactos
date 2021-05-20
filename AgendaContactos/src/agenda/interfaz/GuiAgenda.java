@@ -13,12 +13,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -59,8 +62,7 @@ public class GuiAgenda extends Application {
 		Scene scene = new Scene(root, 1100, 700);
 		stage.setScene(scene);
 		stage.setTitle("Agenda de contactos");
-		scene.getStylesheets().add(getClass().getResource("/darktheme.css")
-		                    .toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/darktheme.css").toExternalForm());
 		stage.show();
 
 	}
@@ -112,14 +114,40 @@ public class GuiAgenda extends Application {
 	}
 
 	private MenuBar crearBarraMenu() {
-		// a completar
 		MenuBar barra = new MenuBar();
+		Menu menu1 = new Menu("_Archivo");
+		Menu menu2 = new Menu("_Operaciones");
+		Menu menu3 = new Menu("_Help");
+
+		itemImportar = new MenuItem("Importar agenda");
+		itemExportarPersonales = new MenuItem("Exportar Personales");
+		itemSalir = new MenuItem("Salir");
+		itemBuscar = new MenuItem("Buscar");
+		itemFelicitar = new MenuItem("Felicitar");
+		itemAbout = new MenuItem("About");
+
+		itemImportar.setAccelerator(KeyCombination.keyCombination("Ctrl+I"));
+		itemImportar.setOnAction(e -> importarAgenda());
+		itemExportarPersonales.setAccelerator(KeyCombination.keyCombination("Ctrl+E"));
+		itemExportarPersonales.setOnAction(e -> exportarPersonales());
+		itemExportarPersonales.setDisable(true);
+		itemSalir.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
+		itemSalir.setOnAction(e -> salir());
+		itemBuscar.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+		itemBuscar.setOnAction(e -> buscar());
+		itemFelicitar.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
+		itemFelicitar.setOnAction(e -> felicitar());
+		itemAbout.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
+		itemAbout.setOnAction(e -> about());
+
+		menu1.getItems().addAll(itemImportar, itemExportarPersonales, new SeparatorMenuItem(), itemSalir);
+		menu2.getItems().addAll(itemBuscar, itemFelicitar);
+		menu3.getItems().addAll(itemAbout);
 
 		return barra;
 	}
 
 	private void importarAgenda() {
-		// a completar
 
 	}
 
@@ -130,8 +158,7 @@ public class GuiAgenda extends Application {
 		try {
 			AgendaIO.exportarPersonales(agenda, ventana.getResult());
 			areaTexto.setText("Exportados datos personajes");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			areaTexto.setText("Error al exportar");
 		}
 	}
@@ -143,8 +170,7 @@ public class GuiAgenda extends Application {
 		clear();
 		if (rbtListarTodo.isSelected()) {
 			areaTexto.setText(agenda.toString());
-		}
-		else {
+		} else {
 			areaTexto.setText(String.valueOf(agenda.totalContactos()));
 		}
 	}
@@ -191,8 +217,7 @@ public class GuiAgenda extends Application {
 		alert.setTitle("About Agenda de Contactos");
 		alert.setContentText("Mi agenda de contactos");
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(getClass().
-		getResource("/application.css").toExternalForm());
+		dialogPane.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 		alert.showAndWait();
 	}
 

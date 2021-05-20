@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,17 +30,15 @@ public class AgendaIO {
 	/**
 	 * Importa a una agenda dado el nombre de un fichero
 	 * 
-	 * @param La agenda a la que se quiere añadir los contactos
+	 * @param La     agenda a la que se quiere añadir los contactos
 	 * @param Nombre del fichero del que se extraen los datos
 	 * @return Número de líneas erroneas en la importación
 	 */
 	public static int importar(AgendaContactos agenda, String nombre) {
-		File f = new File(nombre);
 		int errores = 0;
 		BufferedReader entrada = null;
 		try {
-			InputStream input = AgendaIO.class.getClassLoader()
-					 .getResourceAsStream(nombre);
+			InputStream input = AgendaIO.class.getClassLoader().getResourceAsStream(nombre);
 			entrada = new BufferedReader(new InputStreamReader(input));
 			String linea = entrada.readLine();
 			while (linea != null) {
@@ -102,10 +99,10 @@ public class AgendaIO {
 	}
 
 	/**
-	 * Recibe una agenda y nombre de un fichero y
-	 * exporta los contactos personales ordenados
-	 * por relación
-	 * @param Agenda con los contactos a exportar
+	 * Recibe una agenda y nombre de un fichero y exporta los contactos personales
+	 * ordenados por relación
+	 * 
+	 * @param Agenda  con los contactos a exportar
 	 * @param Fichero al que se exportan los contactos
 	 * @throws IOException
 	 */
