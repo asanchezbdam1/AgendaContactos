@@ -33,7 +33,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-
+/**
+ * Clase encargada de crear y gestionar una interfaz gráfica hecha
+ * con JavaFX. Contiene un panel de botones con todas las letras del abecedario,
+ * botones de importar y exportar y diferentes consultas.
+ * @author Ander Gaona y Asier Sánchez
+ *
+ */
 public class GuiAgenda extends Application {
 	private AgendaContactos agenda;
 	private MenuItem itemImportar;
@@ -59,6 +65,9 @@ public class GuiAgenda extends Application {
 	private Button btnClear;
 	private Button btnSalir;
 
+	/**
+	 * Crea el escenario y añade la escena inicial, después la muestra
+	 */
 	@Override
 	public void start(Stage stage) {
 		agenda = new AgendaContactos(); // el modelo
@@ -72,6 +81,10 @@ public class GuiAgenda extends Application {
 		stage.show();
 	}
 
+	/**
+	 * Crea el panel raíz de la aplicación
+	 * @return panel raíz
+	 */
 	private BorderPane crearGui() {
 		BorderPane panel = new BorderPane();
 		panel.setTop(crearBarraMenu());
@@ -80,6 +93,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Crea el panel principal en el que se sitúan los botones laterales y el área de texto
+	 * @return panel principal
+	 */
 	private BorderPane crearPanelPrincipal() {
 		BorderPane panel = new BorderPane();
 		panel.setPadding(new Insets(10));
@@ -94,6 +111,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Crea el panel de botones lateral
+	 * @return panel de botones
+	 */
 	private VBox crearPanelBotones() {
 		VBox panel = new VBox();
 
@@ -148,6 +169,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Crea el panel de botones de letras
+	 * @return panel de botones de letras
+	 */
 	private GridPane crearPanelLetras() {
 		GridPane panel = new GridPane();
 		char[] letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray();
@@ -168,6 +193,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Crea la barra de menú superior
+	 * @return barra de menú
+	 */
 	private MenuBar crearBarraMenu() {
 		MenuBar barra = new MenuBar();
 		Menu menu1 = new Menu("_Archivo");
@@ -209,8 +238,10 @@ public class GuiAgenda extends Application {
 		return barra;
 	}
 
+	/**
+	 * Importa una agenda desde el fichero CSV seleccionado
+	 */
 	private void importarAgenda() {
-
 		FileChooser selector = new FileChooser();
 		selector.setTitle("Abrir fichero de datos");
 		selector.setInitialDirectory(new File("."));
@@ -223,6 +254,9 @@ public class GuiAgenda extends Application {
 		itemExportarPersonales.setDisable(false);
 	}
 
+	/**
+	 * Exporta los contactos personales a un fichero TXT seleccionado
+	 */
 	private void exportarPersonales() {
 		FileChooser ventana = new FileChooser();
 		ventana.setTitle("Guardar en");
@@ -237,7 +271,7 @@ public class GuiAgenda extends Application {
 	}
 
 	/**
-	 *  
+	 *  Muestra todos los contactos de la agenda o el número de contactos totales
 	 */
 	private void listar() {
 		clear();
@@ -251,7 +285,10 @@ public class GuiAgenda extends Application {
 			areaTexto.setText("Importar agenda para realizar acción");
 		}
 	}
-
+	
+	/**
+	 * Muestra los contactos personales en la letra indicada en el cuadro de diálogo ordenados por fecha
+	 */
 	private void personalesOrdenadosPorFecha() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -280,7 +317,10 @@ public class GuiAgenda extends Application {
 		}
 
 	}
-
+	
+	/**
+	 * Muestra los contactos personales en la letra indicada en el cuadro de diálogo
+	 */
 	private void contactosPersonalesEnLetra() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -309,6 +349,10 @@ public class GuiAgenda extends Application {
 		}
 	}
 
+	/**
+	 * Muestra los contactos en la letra pasada como parámetro
+	 * @param letra
+	 */
 	private void contactosEnLetra(char letra) {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -324,6 +368,9 @@ public class GuiAgenda extends Application {
 		}
 	}
 
+	/**
+	 * Muestra los contactos personales que cumplen en el día actual
+	 */
 	private void felicitar() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -341,6 +388,9 @@ public class GuiAgenda extends Application {
 
 	}
 
+	/**
+	 * Muestra los contactos que contienen la cadena introducida en txtBuscar
+	 */
 	private void buscar() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -363,6 +413,9 @@ public class GuiAgenda extends Application {
 
 	}
 
+	/**
+	 * Muestra una ventana de información sobre la aplicación
+	 */
 	private void about() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("");
@@ -373,20 +426,32 @@ public class GuiAgenda extends Application {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Borra el contenido del área de texto
+	 */
 	private void clear() {
 		areaTexto.clear();
 	}
 
+	/**
+	 * Cierra la aplicación
+	 */
 	private void salir() {
 		Platform.exit();
 	}
-
+	
+	/**
+	 * Pone el foco en la caja de texto de búsqueda
+	 */
 	private void cogerFoco() {
 		txtBuscar.requestFocus();
 		txtBuscar.selectAll();
 
 	}
-
+/**
+ * Punto de entrada a la aplicación, lanza la plataforma
+ * @param argumentos
+ */
 	public static void main(String[] args) {
 		launch(args);
 	}
