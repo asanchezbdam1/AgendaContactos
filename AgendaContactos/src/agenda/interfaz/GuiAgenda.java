@@ -2,9 +2,11 @@ package agenda.interfaz;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
+import agenda.modelo.Contacto;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -296,7 +298,17 @@ public class GuiAgenda extends Application {
 
 	private void buscar() {
 		clear();
-		// a completar
+		String txt = txtBuscar.getText();
+		if (txt.isBlank()) {
+			areaTexto.setText("Campo de texto Buscar vacio");
+		} else {
+			List<Contacto> list = agenda.buscarContactos(txt);
+			if (list.size() == 0) {
+				areaTexto.setText("No existen contactos que contengan la secuencia de caracteres");
+			} else {
+				areaTexto.setText(list.toString());
+			}
+		}
 		cogerFoco();
 
 	}
