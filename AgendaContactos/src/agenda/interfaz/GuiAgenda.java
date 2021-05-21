@@ -229,8 +229,8 @@ public class GuiAgenda extends Application {
 		ventana.getExtensionFilters().add(new ExtensionFilter("Fichero de texto", "*.txt"));
 		File file = ventana.showSaveDialog(null);
 		try {
-			AgendaIO.exportarPersonales(agenda, file.getName());
-			areaTexto.setText("Exportados datos personajes");
+			AgendaIO.exportarPersonales(agenda, file.getAbsolutePath());
+			areaTexto.setText("Exportados contactos personales");
 		} catch (IOException | NullPointerException e) {
 			areaTexto.setText("Error al exportar");
 		}
