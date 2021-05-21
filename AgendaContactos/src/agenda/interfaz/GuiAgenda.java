@@ -68,7 +68,7 @@ public class GuiAgenda extends Application {
 		Scene scene = new Scene(root, 1100, 700);
 		stage.setScene(scene);
 		stage.setTitle("Agenda de contactos");
-		scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("/darktheme.css").toExternalForm());
 		stage.show();
 
 	}
@@ -329,7 +329,13 @@ public class GuiAgenda extends Application {
 		clear();
 		if (itemImportar.isDisable()) {
 			areaTexto.setText(java.time.LocalDate.now() + "\n");
-			agenda.felicitar().forEach(personal -> areaTexto.appendText(personal.toString()));
+			List<Personal> personales = agenda.felicitar();
+			if (personales.isEmpty()) {
+				areaTexto.appendText("Hoy no es el cumpleaños de nadie :(");
+			} else {
+				areaTexto.appendText("Cumplen años hoy:\n");
+				personales.forEach(personal -> areaTexto.appendText(personal.toString()));
+			}
 		} else {
 			areaTexto.setText("Importar agenda para realizar acción");
 		}
@@ -343,6 +349,7 @@ public class GuiAgenda extends Application {
 			if (txt.isBlank()) {
 				areaTexto.setText("Campo de texto Buscar vacio");
 			} else {
+				areaTexto.setText("Contactos con la cadena \"" + txt + "\"\n");
 				List<Contacto> list = agenda.buscarContactos(txt);
 				if (list.isEmpty()) {
 					areaTexto.setText("No existen contactos que contengan la secuencia de caracteres");
@@ -359,6 +366,7 @@ public class GuiAgenda extends Application {
 
 	private void about() {
 		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("");
 		alert.setTitle("About Agenda de Contactos");
 		alert.setContentText("Mi agenda de contactos");
 		DialogPane dialogPane = alert.getDialogPane();
@@ -367,7 +375,7 @@ public class GuiAgenda extends Application {
 	}
 
 	private void clear() {
-		areaTexto.setText("");
+		areaTexto.clear();
 	}
 
 	private void salir() {
