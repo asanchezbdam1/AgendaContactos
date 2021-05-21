@@ -260,13 +260,14 @@ public class GuiAgenda extends Application {
 			for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
 				ventana.getItems().add(c);
 			}
+			ventana.setSelectedItem('A');
 			ventana.showAndWait();
 			Character c = ventana.getSelectedItem();
 			if (c == null) {
 				areaTexto.setText("No se ha elegido letra");
 			} else {
 				try {
-					agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString()));
+					agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
 				} catch (Exception e) {
 					areaTexto.setText("No existe ningun contacto personal con esa letra");
 				}
@@ -285,9 +286,10 @@ public class GuiAgenda extends Application {
 			for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
 				ventana.getItems().add(c);
 			}
+			ventana.setSelectedItem('A');
 			ventana.showAndWait();
 			char c = ventana.getResult();
-			agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString()));
+			agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
 		} else {
 			areaTexto.setText("Importar agenda para realizar acción");
 		}
@@ -299,10 +301,11 @@ public class GuiAgenda extends Application {
 			if (agenda.totalContactos() == 0) {
 				areaTexto.setText("Debes importar la agenda primero");
 			} else {
+				areaTexto.setText("Contactos en letra " + letra + "\n\n");
 				if (agenda.contactosEnLetra(letra) == null) {
-					areaTexto.setText("No existe ningun contacto con esa letra");
+					areaTexto.appendText("No existe ningun contacto con esa letra");
 				} else {
-					areaTexto.setText(agenda.contactosEnLetra(letra).toString());
+					agenda.contactosEnLetra(letra).forEach(contacto -> areaTexto.appendText(contacto.toString() + "\n"));;
 				}
 			}
 		} else {
