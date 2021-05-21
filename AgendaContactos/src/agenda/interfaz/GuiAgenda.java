@@ -7,6 +7,7 @@ import java.util.List;
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
 import agenda.modelo.Contacto;
+import agenda.modelo.Personal;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -266,9 +267,12 @@ public class GuiAgenda extends Application {
 			if (c == null) {
 				areaTexto.setText("No se ha elegido letra");
 			} else {
-				try {
-					agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
-				} catch (Exception e) {
+				areaTexto.setText("Contactos en letra " + c);
+				List<Personal> personales = agenda.personalesOrdenadosPorFechaNacimiento(c);
+				if (personales != null) {
+					areaTexto.appendText(" ("+ personales.size() + " contacto/s)\n\n");
+					personales.forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
+				} else {
 					areaTexto.setText("No existe ningun contacto personal con esa letra");
 				}
 			}
@@ -288,8 +292,19 @@ public class GuiAgenda extends Application {
 			}
 			ventana.setSelectedItem('A');
 			ventana.showAndWait();
-			char c = ventana.getResult();
-			agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
+			Character c = ventana.getResult();
+			if (c == null) {
+				areaTexto.setText("No se ha elegido letra");
+			} else {
+				areaTexto.setText("Contactos en letra " + c);
+				List<Personal> personales = agenda.personalesEnLetra(c);
+				if (personales == null) {
+					areaTexto.appendText("\n\nNo existe ningun contacto con esa letra");
+				} else {
+					areaTexto.appendText(" ("+ personales.size() + " contacto/s)\n\n");
+					personales.forEach(personal -> areaTexto.appendText(personal.toString() + "\n"));
+				}
+			}
 		} else {
 			areaTexto.setText("Importar agenda para realizar acción");
 		}
@@ -298,15 +313,12 @@ public class GuiAgenda extends Application {
 	private void contactosEnLetra(char letra) {
 		clear();
 		if (itemImportar.isDisable()) {
-			if (agenda.totalContactos() == 0) {
-				areaTexto.setText("Debes importar la agenda primero");
+			areaTexto.setText("Contactos en letra " + letra + "\n\n");
+			java.util.Set<Contacto> contactos = agenda.contactosEnLetra(letra);
+			if (contactos == null) {
+				areaTexto.appendText("No existe ningun contacto con esa letra");
 			} else {
-				areaTexto.setText("Contactos en letra " + letra + "\n\n");
-				if (agenda.contactosEnLetra(letra) == null) {
-					areaTexto.appendText("No existe ningun contacto con esa letra");
-				} else {
-					agenda.contactosEnLetra(letra).forEach(contacto -> areaTexto.appendText(contacto.toString() + "\n"));;
-				}
+				contactos.forEach(contacto -> areaTexto.appendText(contacto.toString() + "\n"));;
 			}
 		} else {
 			areaTexto.setText("Importar agenda para realizar acción");
