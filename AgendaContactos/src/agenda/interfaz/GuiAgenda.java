@@ -1,5 +1,6 @@
 package agenda.interfaz;
 
+import java.io.File;
 import java.io.IOException;
 
 import agenda.io.AgendaIO;
@@ -27,6 +28,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class GuiAgenda extends Application {
@@ -93,10 +96,12 @@ public class GuiAgenda extends Application {
 		VBox panel = new VBox();
 
 		panel.setPadding(new Insets(10));
+		panel.setSpacing(10);
 
 		txtBuscar = new TextField("Buscar");
-		txtBuscar.setMinHeight(40);
-		txtBuscar.setPadding(new Insets(0, 0, 40, 0));
+		txtBuscar.setMinWidth(40);
+		txtBuscar.setOnAction(e -> buscar());
+		VBox.setMargin(txtBuscar, new Insets(0, 0, 40, 0));
 
 		rbtListarTodo = new RadioButton("Listar toda la agenda");
 		rbtListarTodo.setSelected(true);
@@ -110,24 +115,29 @@ public class GuiAgenda extends Application {
 		btnListar = new Button("Listar");
 		btnListar.getStyleClass().add("botones");
 		btnListar.setPrefWidth(250);
+		btnListar.setOnAction(e -> listar());
 		VBox.setMargin(btnListar, new Insets(0, 0, 40, 0));
 
 		btnPersonalesEnLetra = new Button("Contactos personales en letra");
 		btnPersonalesEnLetra.getStyleClass().add("botones");
 		btnPersonalesEnLetra.setPrefWidth(250);
+		btnPersonalesEnLetra.setOnAction(e -> contactosPersonalesEnLetra());
 
 		btnPersonalesOrdenadosPorFecha = new Button("Contactos personales ordenados por fecha");
 		btnPersonalesOrdenadosPorFecha.getStyleClass().add("botones");
 		btnPersonalesOrdenadosPorFecha.setPrefWidth(250);
+		btnPersonalesOrdenadosPorFecha.setOnAction(e -> personalesOrdenadosPorFecha());
 
 		btnClear = new Button("Clear");
 		btnClear.getStyleClass().add("botones");
 		btnClear.setPrefWidth(250);
+		btnClear.setOnAction(e -> clear());
 		VBox.setMargin(btnClear, new Insets(40, 0, 0, 0));
 
 		btnSalir = new Button("Salir");
 		btnSalir.getStyleClass().add("botones");
 		btnSalir.setPrefWidth(250);
+		btnSalir.setOnAction(e -> salir());
 
 		panel.getChildren().addAll(txtBuscar, rbtListarTodo, rbtListarSoloNumero, btnListar, btnPersonalesEnLetra,
 				btnPersonalesOrdenadosPorFecha, btnClear, btnSalir);
@@ -170,15 +180,20 @@ public class GuiAgenda extends Application {
 
 		itemImportar.setAccelerator(KeyCombination.keyCombination("Ctrl+I"));
 		itemImportar.setOnAction(e -> importarAgenda());
+
 		itemExportarPersonales.setAccelerator(KeyCombination.keyCombination("Ctrl+E"));
 		itemExportarPersonales.setOnAction(e -> exportarPersonales());
 		itemExportarPersonales.setDisable(true);
+
 		itemSalir.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
 		itemSalir.setOnAction(e -> salir());
+
 		itemBuscar.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
 		itemBuscar.setOnAction(e -> buscar());
+
 		itemFelicitar.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
 		itemFelicitar.setOnAction(e -> felicitar());
+
 		itemAbout.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
 		itemAbout.setOnAction(e -> about());
 
@@ -193,6 +208,16 @@ public class GuiAgenda extends Application {
 
 	private void importarAgenda() {
 
+		FileChooser selector = new FileChooser();
+		selector.setTitle("Abrir fichero de datos");
+		selector.setInitialDirectory(new File("."));
+		selector.getExtensionFilters().addAll(new ExtensionFilter("csv", "*.csv"));
+		File f = selector.showOpenDialog(null);
+		if (f != null) {
+			areaTexto.setText("Nº de lineas erroneas: " + AgendaIO.importar(agenda, f.getName()));
+		}
+		itemImportar.setDisable(true);
+		itemExportarPersonales.setDisable(false);
 	}
 
 	private void exportarPersonales() {
@@ -221,7 +246,24 @@ public class GuiAgenda extends Application {
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
-		// a completar
+		ChoiceDialog<Character> ventana = new ChoiceDialog<>();
+		ventana.setContentText("Seleccionar letra");
+		for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
+			ventana.getItems().add(c);
+		}
+		ventana.showAndWait();
+		Character c = ventana.getSelectedItem();
+		if (c == null) {
+			areaTexto.setText("No se ha elegido letra");
+		} else {
+			try {
+				StringBuilder sb = new StringBuilder();
+				agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> sb.append(personal.toString()));
+				areaTexto.setText(sb.toString());
+			} catch (Exception e) {
+				areaTexto.setText("No existe ningun contacto personal con esa letra");
+			}
+		}
 
 	}
 
@@ -229,9 +271,12 @@ public class GuiAgenda extends Application {
 		clear();
 		ChoiceDialog<Character> ventana = new ChoiceDialog<>();
 		ventana.setContentText("Seleccionar letra");
+		for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
+			ventana.getItems().add(c);
+		}
 		ventana.showAndWait();
 		char c = ventana.getResult();
-		StringBuilder sb = new StringBuilder(java.time.LocalDate.now() + "\n");
+		StringBuilder sb = new StringBuilder();
 		agenda.personalesEnLetra(c).forEach(personal -> sb.append(personal.toString()));
 		areaTexto.setText(sb.toString());
 	}

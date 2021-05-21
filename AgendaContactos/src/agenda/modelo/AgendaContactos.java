@@ -23,9 +23,10 @@ public class AgendaContactos {
 	public AgendaContactos() {
 		agenda = new TreeMap<>();
 	}
-	
+
 	/**
 	 * Añade un contacto a la agenda
+	 * 
 	 * @param contacto a añadir
 	 */
 	public void añadirContacto(Contacto contacto) {
@@ -39,8 +40,10 @@ public class AgendaContactos {
 			agenda.put(letra, contactos);
 		}
 	}
+
 	/**
 	 * Devuelve los contactos en la letra pasada como parámetro
+	 * 
 	 * @param letra por la que empiezan los apellidos de los contactos a devolver
 	 * @return conjunto de contactos en la letra pasada como parámetro
 	 */
@@ -52,6 +55,7 @@ public class AgendaContactos {
 			return agenda.get(letra);
 		}
 	}
+
 	/**
 	 * 
 	 * @return cantidad total de contactos
@@ -63,6 +67,7 @@ public class AgendaContactos {
 		}
 		return n;
 	}
+
 	/**
 	 * Representación textual de la agenda
 	 */
@@ -80,7 +85,9 @@ public class AgendaContactos {
 	}
 
 	/**
-	 * Devuelve el conjunto de contactos que contienen la cadena pasada como parámetro en nombre o apellidos
+	 * Devuelve el conjunto de contactos que contienen la cadena pasada como
+	 * parámetro en nombre o apellidos
+	 * 
 	 * @param cadena a buscar
 	 * @return conjunto de contactos que contienen la cadena
 	 */
@@ -100,8 +107,10 @@ public class AgendaContactos {
 		return contactos;
 
 	}
+
 	/**
 	 * Devuelve los contactos personales en la letra indicada
+	 * 
 	 * @param letra por la que empezarán los apellidos
 	 * @return conjunto de contactos personales
 	 */
@@ -117,11 +126,16 @@ public class AgendaContactos {
 				personales.add((Personal) cont);
 			}
 		}
+		if (personales.size() == 0) {
+			return null;
+		}
 		return personales;
 	}
-	
+
 	/**
-	 * Devuelve el conjunto de contactos cuyo cumpleaños coincide con la fecha del sistema
+	 * Devuelve el conjunto de contactos cuyo cumpleaños coincide con la fecha del
+	 * sistema
+	 * 
 	 * @return conjunto de contactos que cumplen años
 	 */
 	public List<Personal> felicitar() {
@@ -140,7 +154,9 @@ public class AgendaContactos {
 	}
 
 	/**
-	 * Devuelve un mapa/diccionario ordenado por relacion, y los nombres de los contactos ordenados por apellido
+	 * Devuelve un mapa/diccionario ordenado por relacion, y los nombres de los
+	 * contactos ordenados por apellido
+	 * 
 	 * @return mapa ordenado por relacion
 	 */
 	public Map<Relacion, List<String>> personalesPorRelacion() {
@@ -159,7 +175,9 @@ public class AgendaContactos {
 	}
 
 	/**
-	 * Devuelve los contactos personales en la letra pasada como parámetro, ordenados por fecha de nacimiento
+	 * Devuelve los contactos personales en la letra pasada como parámetro,
+	 * ordenados por fecha de nacimiento
+	 * 
 	 * @param letra de comienzo de los apellidos de los contactos
 	 * @return conjunto de contactos personales ordenados
 	 */
@@ -169,8 +187,9 @@ public class AgendaContactos {
 			return null;
 		}
 		List<Personal> personales = personalesEnLetra(letra);
-		Collections.sort(personales,
-				(p1, p2) -> (int) p1.getFechaNacimiento().compareTo(p2.getFechaNacimiento()));
+		if (personales != null) {
+			Collections.sort(personales, (p1, p2) -> (int) p1.getFechaNacimiento().compareTo(p2.getFechaNacimiento()));
+		}
 		return personales;
 
 	}
