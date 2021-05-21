@@ -285,7 +285,15 @@ public class GuiAgenda extends Application {
 
 	private void contactosEnLetra(char letra) {
 		clear();
-		// a completar
+		if (agenda.totalContactos() == 0) {
+			areaTexto.setText("Debes importar la agenda primero");
+		} else {
+			if (agenda.contactosEnLetra(letra) == null) {
+				areaTexto.setText("No existe ningun contacto con esa letra");
+			} else {
+				areaTexto.setText(agenda.contactosEnLetra(letra).toString());
+			}
+		}
 	}
 
 	private void felicitar() {
