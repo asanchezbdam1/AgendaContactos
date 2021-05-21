@@ -87,6 +87,7 @@ public class GuiAgenda extends Application {
 
 		areaTexto = new TextArea();
 		areaTexto.getStyleClass().add("textarea");
+		areaTexto.setEditable(false);
 		panel.setCenter(areaTexto);
 
 		panel.setLeft(crearPanelBotones());
@@ -99,9 +100,10 @@ public class GuiAgenda extends Application {
 		panel.setPadding(new Insets(10));
 		panel.setSpacing(10);
 
-		txtBuscar = new TextField("Buscar");
+		txtBuscar = new TextField();
 		txtBuscar.setMinWidth(40);
 		txtBuscar.setOnAction(e -> buscar());
+		txtBuscar.setPromptText("Buscar");
 		VBox.setMargin(txtBuscar, new Insets(0, 0, 40, 0));
 
 		rbtListarTodo = new RadioButton("Listar toda la agenda");
@@ -239,70 +241,102 @@ public class GuiAgenda extends Application {
 	 */
 	private void listar() {
 		clear();
-		if (rbtListarTodo.isSelected()) {
-			areaTexto.setText(agenda.toString());
+		if (itemImportar.isDisable()) {
+			if (rbtListarTodo.isSelected()) {
+				areaTexto.setText(agenda.toString());
+			} else {
+				areaTexto.setText(String.valueOf(agenda.totalContactos()));
+			}
 		} else {
-			areaTexto.setText(String.valueOf(agenda.totalContactos()));
+			areaTexto.setText("Importar agenda para realizar acción");
 		}
 	}
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
-		ChoiceDialog<Character> ventana = new ChoiceDialog<>();
-		ventana.setContentText("Seleccionar letra");
-		for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
-			ventana.getItems().add(c);
-		}
-		ventana.showAndWait();
-		Character c = ventana.getSelectedItem();
-		if (c == null) {
-			areaTexto.setText("No se ha elegido letra");
-		} else {
-			try {
-				agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString()));
-			} catch (Exception e) {
-				areaTexto.setText("No existe ningun contacto personal con esa letra");
+		if (itemImportar.isDisable()) {
+			ChoiceDialog<Character> ventana = new ChoiceDialog<>();
+			ventana.setContentText("Seleccionar letra");
+			for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
+				ventana.getItems().add(c);
 			}
+			ventana.showAndWait();
+			Character c = ventana.getSelectedItem();
+			if (c == null) {
+				areaTexto.setText("No se ha elegido letra");
+			} else {
+				try {
+					agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString()));
+				} catch (Exception e) {
+					areaTexto.setText("No existe ningun contacto personal con esa letra");
+				}
+			}
+		} else {
+			areaTexto.setText("Importar agenda para realizar acción");
 		}
 
 	}
 
 	private void contactosPersonalesEnLetra() {
 		clear();
-		ChoiceDialog<Character> ventana = new ChoiceDialog<>();
-		ventana.setContentText("Seleccionar letra");
-		for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
-			ventana.getItems().add(c);
+		if (itemImportar.isDisable()) {
+			ChoiceDialog<Character> ventana = new ChoiceDialog<>();
+			ventana.setContentText("Seleccionar letra");
+			for (char c : "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".toCharArray()) {
+				ventana.getItems().add(c);
+			}
+			ventana.showAndWait();
+			char c = ventana.getResult();
+			agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString()));
+		} else {
+			areaTexto.setText("Importar agenda para realizar acción");
 		}
-		ventana.showAndWait();
-		char c = ventana.getResult();
-		agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString()));
 	}
 
 	private void contactosEnLetra(char letra) {
 		clear();
-		// a completar
+		if (itemImportar.isDisable()) {
+			if (agenda.totalContactos() == 0) {
+				areaTexto.setText("Debes importar la agenda primero");
+			} else {
+				if (agenda.contactosEnLetra(letra) == null) {
+					areaTexto.setText("No existe ningun contacto con esa letra");
+				} else {
+					areaTexto.setText(agenda.contactosEnLetra(letra).toString());
+				}
+			}
+		} else {
+			areaTexto.setText("Importar agenda para realizar acción");
+		}
 	}
 
 	private void felicitar() {
 		clear();
-		areaTexto.setText(java.time.LocalDate.now() + "\n");
-		agenda.felicitar().forEach(personal -> areaTexto.appendText(personal.toString()));
+		if (itemImportar.isDisable()) {
+			areaTexto.setText(java.time.LocalDate.now() + "\n");
+			agenda.felicitar().forEach(personal -> areaTexto.appendText(personal.toString()));
+		} else {
+			areaTexto.setText("Importar agenda para realizar acción");
+		}
 
 	}
 
 	private void buscar() {
 		clear();
-		String txt = txtBuscar.getText();
-		if (txt.isBlank()) {
-			areaTexto.setText("Campo de texto Buscar vacio");
-		} else {
-			List<Contacto> list = agenda.buscarContactos(txt);
-			if (list.isEmpty()) {
-				areaTexto.setText("No existen contactos que contengan la secuencia de caracteres");
+		if (itemImportar.isDisable()) {
+			String txt = txtBuscar.getText();
+			if (txt.isBlank()) {
+				areaTexto.setText("Campo de texto Buscar vacio");
 			} else {
-				list.forEach(contacto -> areaTexto.appendText(contacto.toString()));
+				List<Contacto> list = agenda.buscarContactos(txt);
+				if (list.isEmpty()) {
+					areaTexto.setText("No existen contactos que contengan la secuencia de caracteres");
+				} else {
+					list.forEach(contacto -> areaTexto.appendText(contacto.toString()));
+				}
 			}
+		} else {
+			areaTexto.setText("Importar agenda para realizar acción");
 		}
 		cogerFoco();
 
