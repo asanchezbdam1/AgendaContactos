@@ -126,7 +126,7 @@ public class AgendaContactos {
 				personales.add((Personal) cont);
 			}
 		}
-		if (personales.size() == 0) {
+		if (personales.isEmpty()) {
 			return null;
 		}
 		return personales;

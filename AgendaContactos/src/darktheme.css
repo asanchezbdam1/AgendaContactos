@@ -1,6 +1,6 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .botones {
-	-fx-background-color: rgb(222,193,180);
+	-fx-background-color: #444444;
 	-fx-border-color:  rgb(128,128,128);
     -fx-border-radius:  4px;
     -fx-font-family: "Pt Sans";

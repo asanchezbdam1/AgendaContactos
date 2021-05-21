@@ -259,9 +259,7 @@ public class GuiAgenda extends Application {
 			areaTexto.setText("No se ha elegido letra");
 		} else {
 			try {
-				StringBuilder sb = new StringBuilder();
-				agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> sb.append(personal.toString()));
-				areaTexto.setText(sb.toString());
+				agenda.personalesOrdenadosPorFechaNacimiento(c).forEach(personal -> areaTexto.appendText(personal.toString()));
 			} catch (Exception e) {
 				areaTexto.setText("No existe ningun contacto personal con esa letra");
 			}
@@ -278,9 +276,7 @@ public class GuiAgenda extends Application {
 		}
 		ventana.showAndWait();
 		char c = ventana.getResult();
-		StringBuilder sb = new StringBuilder();
-		agenda.personalesEnLetra(c).forEach(personal -> sb.append(personal.toString()));
-		areaTexto.setText(sb.toString());
+		agenda.personalesEnLetra(c).forEach(personal -> areaTexto.appendText(personal.toString()));
 	}
 
 	private void contactosEnLetra(char letra) {
@@ -290,9 +286,8 @@ public class GuiAgenda extends Application {
 
 	private void felicitar() {
 		clear();
-		StringBuilder sb = new StringBuilder(java.time.LocalDate.now() + "\n");
-		agenda.felicitar().forEach(personal -> sb.append(personal.toString()));
-		areaTexto.setText(sb.toString());
+		areaTexto.setText(java.time.LocalDate.now() + "\n");
+		agenda.felicitar().forEach(personal -> areaTexto.appendText(personal.toString()));
 
 	}
 
@@ -303,10 +298,10 @@ public class GuiAgenda extends Application {
 			areaTexto.setText("Campo de texto Buscar vacio");
 		} else {
 			List<Contacto> list = agenda.buscarContactos(txt);
-			if (list.size() == 0) {
+			if (list.isEmpty()) {
 				areaTexto.setText("No existen contactos que contengan la secuencia de caracteres");
 			} else {
-				areaTexto.setText(list.toString());
+				list.forEach(contacto -> areaTexto.appendText(contacto.toString()));
 			}
 		}
 		cogerFoco();
