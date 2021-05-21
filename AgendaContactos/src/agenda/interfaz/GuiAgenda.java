@@ -21,7 +21,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
@@ -221,13 +220,14 @@ public class GuiAgenda extends Application {
 	}
 
 	private void exportarPersonales() {
-		TextInputDialog ventana = new TextInputDialog("Introduzca nombre");
-		ventana.setContentText("Nombre para el fichero");
-		ventana.showAndWait();
+		FileChooser ventana = new FileChooser();
+		ventana.setTitle("Guardar en");
+		ventana.getExtensionFilters().add(new ExtensionFilter("Fichero de texto", "*.txt"));
+		File file = ventana.showSaveDialog(null);
 		try {
-			AgendaIO.exportarPersonales(agenda, ventana.getResult());
+			AgendaIO.exportarPersonales(agenda, file.getName());
 			areaTexto.setText("Exportados datos personajes");
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			areaTexto.setText("Error al exportar");
 		}
 	}
