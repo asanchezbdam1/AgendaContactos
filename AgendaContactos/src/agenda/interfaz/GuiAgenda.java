@@ -70,7 +70,6 @@ public class GuiAgenda extends Application {
 		stage.setTitle("Agenda de contactos");
 		scene.getStylesheets().add(getClass().getResource("/darktheme.css").toExternalForm());
 		stage.show();
-
 	}
 
 	private BorderPane crearGui() {
